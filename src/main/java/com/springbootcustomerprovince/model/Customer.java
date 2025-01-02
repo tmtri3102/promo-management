@@ -15,4 +15,7 @@ public class Customer
     private String address;
     private String email;
 
+    @ManyToOne
+    @JoinColumn(name = "province_id")
+    private Province province;
 }

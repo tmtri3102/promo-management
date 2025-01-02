@@ -1,8 +1,13 @@
 package com.springbootcustomerprovince.controller;
 
 import com.springbootcustomerprovince.model.Customer;
+import com.springbootcustomerprovince.model.Province;
 import com.springbootcustomerprovince.service.ICustomerService;
+import com.springbootcustomerprovince.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,14 +20,34 @@ public class CustomerController {
     @Autowired
     private ICustomerService customerService;
 
-    // Read
+    @Autowired
+    private IProvinceService provinceService;
+
+    // Read + Paging
+    @ModelAttribute("provinces")
+    public Iterable<Province> listProvinces() {
+        return provinceService.findAll();
+    }
 
     @GetMapping
-    public ModelAndView listCustomers() {
-        ModelAndView modelAndView = new ModelAndView("/customer/list");
-        modelAndView.addObject("customers", customerService.findAll());
+    public ModelAndView listCustomers(@PageableDefault(value = 5) Pageable pageable) {
+        ModelAndView modelAndView = new ModelAndView("customer/list");
+        System.out.println("Hello world");
+        Page<Customer> customers = customerService.findAll(pageable);
+        modelAndView.addObject("customers", customers);
         return modelAndView;
     }
+
+
+    // Old code
+//    @GetMapping
+//    public ModelAndView listCustomers() {
+//        ModelAndView modelAndView = new ModelAndView("/customer/list");
+//        modelAndView.addObject("customers", customerService.findAll());
+//        return modelAndView;
+//    }
+    //
+
 
     // Create
 
@@ -84,4 +109,6 @@ public class CustomerController {
         customerService.remove(customer.getId());
         return "redirect:/customers";
     }
+
+
 }

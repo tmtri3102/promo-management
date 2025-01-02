@@ -29,21 +29,21 @@ public class ProvinceController
 
     // Create
 
-    @GetMapping("/create")
-    public ModelAndView showCreateForm() {
-        ModelAndView modelAndView = new ModelAndView("/provinces/create");
-        modelAndView.addObject("province", new Province());
-        return modelAndView;
-    }
-
-    @PostMapping("/create")
-    public ModelAndView saveProvince(@ModelAttribute("province") Province province){
-        provinceService.save(province);
-        ModelAndView modelAndView = new ModelAndView("/province/create");
-        modelAndView.addObject("province", new Customer());
-        modelAndView.addObject("message", "Added a new province");
-        return modelAndView;
-    }
+//    @GetMapping("/create")
+//    public ModelAndView showCreateForm() {
+//        ModelAndView modelAndView = new ModelAndView("/provinces/create");
+//        modelAndView.addObject("province", new Province());
+//        return modelAndView;
+//    }
+//
+//    @PostMapping("/create")
+//    public ModelAndView saveProvince(@ModelAttribute("province") Province province){
+//        provinceService.save(province);
+//        ModelAndView modelAndView = new ModelAndView("/province/create");
+//        modelAndView.addObject("province", new Customer());
+//        modelAndView.addObject("message", "Added a new province");
+//        return modelAndView;
+//    }
 
 
 }

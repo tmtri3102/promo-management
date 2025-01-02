@@ -23,6 +23,15 @@
             <td>Email: </td>
             <td><input type="text" th:field="*{email}"/></td>
         </tr>
+
+        <tr>
+            <td><label for="province">Province</label></td>
+            <td>
+                <select id="province" th:field="*{province}">
+                    <option th:each="p : ${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
+                </select>
+            </td>
+        </tr>
         <tr>
             <td></td>
             <td><input type="submit" value="Create customer"></td>
