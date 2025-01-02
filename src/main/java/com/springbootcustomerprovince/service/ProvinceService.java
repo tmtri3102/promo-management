@@ -1,5 +1,6 @@
 package com.springbootcustomerprovince.service;
 
+import com.springbootcustomerprovince.model.DTO.CountCustomerDTO;
 import com.springbootcustomerprovince.model.Province;
 import com.springbootcustomerprovince.repository.IProvinceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,15 @@ public class ProvinceService implements IProvinceService {
     @Override
     public void remove(Integer id) {
         provinceRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<CountCustomerDTO> countCustomerByProvince() {
+        return provinceRepository.countCustomerByProvince();
+    }
+
+    @Override
+    public void deleteProvince(int id) {
+        provinceRepository.deleteProvinceById(id);
     }
 }

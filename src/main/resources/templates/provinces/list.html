@@ -12,13 +12,17 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Count1</th>
+        <th>Count2</th>
 <!--        <th>Update</th>-->
         <th>Delete</th>
     </tr>
-    <th:block th:each="province : ${provinces}">
+    <th:block th:each="province, pStat : ${provinces}">
         <tr>
             <td th:text="${province.id}"></td>
             <td th:text="${province.name}"></td>
+            <td th:text="${province.count}"></td>
+            <td th:text="${pStat.count}"></td>
 <!--            <td><a th:href="@{/provinces/update/__${province.id}__ }">Update</a></td>-->
             <td><a th:href="@{/provinces/delete/__${province.id}__ }">Delete</a></td>
         </tr>

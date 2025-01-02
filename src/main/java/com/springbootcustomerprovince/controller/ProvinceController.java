@@ -1,10 +1,12 @@
 package com.springbootcustomerprovince.controller;
 
 import com.springbootcustomerprovince.model.Customer;
+import com.springbootcustomerprovince.model.DTO.CountCustomerDTO;
 import com.springbootcustomerprovince.model.Province;
 import com.springbootcustomerprovince.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,23 +24,37 @@ public class ProvinceController
     @GetMapping
     public ModelAndView listProvinces() {
         ModelAndView modelAndView = new ModelAndView("/provinces/list");
-        modelAndView.addObject("provinces", provinceService.findAll());
+//        modelAndView.addObject("provinces", provinceService.findAll());
+        Iterable<CountCustomerDTO> provinces = provinceService.countCustomerByProvince();
+        System.out.println("Hello");
+        modelAndView.addObject("provinces", provinces);
         return modelAndView;
     }
 
-    // Delete
+//    @GetMapping
+//    public String listProvince(Model model) {
+//        Iterable<CountCustomerDTO> provinces = provinceService.countCustomerByProvince();
+//        model.addAttribute("provinces", provinces);
+//        return "provinces/list";
+//    }
 
+    // Delete
     @GetMapping("/delete/{id}")
-    public ModelAndView showDeleteForm(@PathVariable int id) {
-        Optional<Province> province = provinceService.findById(id);
-        if (province.isPresent()) {
-            ModelAndView modelAndView = new ModelAndView("/province/delete");
-            modelAndView.addObject("province", province.get());
-            return modelAndView;
-        } else {
-            return new ModelAndView("/error_404");
-        }
+    public String delete(@PathVariable int id) {
+        provinceService.deleteProvince(id);
+        return "redirect:/provinces";
     }
+//    @GetMapping("/delete/{id}")
+//    public ModelAndView showDeleteForm(@PathVariable int id) {
+//        Optional<Province> province = provinceService.findById(id);
+//        if (province.isPresent()) {
+//            ModelAndView modelAndView = new ModelAndView("/province/delete");
+//            modelAndView.addObject("province", province.get());
+//            return modelAndView;
+//        } else {
+//            return new ModelAndView("/error_404");
+//        }
+//    }
 
     @PostMapping("/delete")
     public String deleteCustomer(@ModelAttribute("province") Province province) {
@@ -63,6 +79,5 @@ public class ProvinceController
         modelAndView.addObject("message", "Added a new province");
         return modelAndView;
     }
-
 
 }
