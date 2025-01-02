@@ -33,5 +33,7 @@
     <span th:text="${customers.totalPages}"></span>
     <a th:if="${customers.hasNext()}" th:href="@{'/customers'(page=${customers.number + 1})}">Next</a>
 </div>
+
+<a href="/provinces">Province list</a>
 </body>
 </html>
