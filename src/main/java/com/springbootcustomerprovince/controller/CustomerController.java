@@ -7,6 +7,7 @@ import com.springbootcustomerprovince.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +31,34 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ModelAndView listCustomers(@PageableDefault(value = 5) Pageable pageable) {
+    public ModelAndView listCustomers(@PageableDefault(value = 5) Pageable pageable, @RequestParam("search") Optional<String> search) {
+        Page<Customer> customers;
+        if(search.isPresent()){
+            customers = customerService.findAllByNameContainingIgnoreCase(pageable, search.get());
+        } else {
+            customers = customerService.findAll(pageable);
+        }
+        System.out.println("Hello");
         ModelAndView modelAndView = new ModelAndView("customer/list");
-        System.out.println("Hello world");
-        Page<Customer> customers = customerService.findAll(pageable);
         modelAndView.addObject("customers", customers);
         return modelAndView;
     }
+
+//    @GetMapping
+//    public ModelAndView listCustomers(
+//            @PageableDefault(size = 3, sort = "firstName", direction = Sort.Direction.ASC) Pageable pageable,
+//            @RequestParam("search") Optional<String> search) {
+//        Page<Customer> customers;
+//
+//        if(search.isPresent()){
+//            customers = customerService.findAllByFirstNameContaining(pageable, search.get());
+//        } else {
+//            customers = customerService.findAll(pageable);
+//        }
+//        ModelAndView modelAndView = new ModelAndView("customer/list");
+//        modelAndView.addObject("customers", customers);
+//        return modelAndView;
+//    }
 
 
     // Old code

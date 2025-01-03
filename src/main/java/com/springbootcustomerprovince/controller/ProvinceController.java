@@ -5,6 +5,8 @@ import com.springbootcustomerprovince.model.DTO.CountCustomerDTO;
 import com.springbootcustomerprovince.model.Province;
 import com.springbootcustomerprovince.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,8 @@ public class ProvinceController
 //        model.addAttribute("provinces", provinces);
 //        return "provinces/list";
 //    }
+
+
 
     // Delete
     @GetMapping("/delete/{id}")

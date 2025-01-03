@@ -7,6 +7,12 @@
 <body>
 <a href="/customers/create">Create new customer</a>
 <h1>All Customers</h1>
+<div style="margin: 50px 0px">
+    <form th:action="@{/customers}" method="get">
+        <label><input type="text" name="search"></label>
+        <button type="submit">Search</button>
+    </form>
+</div>
 <table border="1">
     <tr>
         <th>Name</th>

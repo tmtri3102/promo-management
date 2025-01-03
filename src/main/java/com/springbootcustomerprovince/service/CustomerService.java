@@ -43,4 +43,9 @@ public class CustomerService implements ICustomerService {
     public Page<Customer> findAll(Pageable pageable) {
         return customerRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<Customer> findAllByNameContainingIgnoreCase(Pageable pageable, String name) {
+        return customerRepository.findAllByNameContainingIgnoreCase(pageable, name);
+    }
 }
