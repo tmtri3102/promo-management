@@ -7,7 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PromoService implements IPromoService {
@@ -36,6 +40,31 @@ public class PromoService implements IPromoService {
         promoRepository.deleteById(id);
     }
 
+//    public List<Promo> searchPromos(Double discount, LocalDate startDate, LocalDate endDate) {
+//        return promoRepository.findByDiscountGreaterThanEqualAndStartDateAfterAndEndDateBefore(discount, startDate, endDate);
+//    }
+
+    @Override
+    public List<Promo> searchPromos(String search) {
+        List<Promo> results = new ArrayList<>();
+
+        // Tách các phần từ trong chuỗi tìm kiếm
+        String[] params = search.split(",");
+        for (String param : params) {
+            param = param.trim();
+            if (param.matches("\\d+(\\.\\d+)?")) { // Kiểm tra nếu là discount
+                Double discount = Double.valueOf(param);
+                results.addAll(promoRepository.findByDiscountGreaterThanEqual(discount));
+            } else if (param.matches("\\d{4}-\\d{2}-\\d{2}")) { // Kiểm tra nếu là date
+                LocalDate date = LocalDate.parse(param);
+                results.addAll(promoRepository.findByStartDateAfter(date));
+                results.addAll(promoRepository.findByEndDateBefore(date));
+            }
+        }
+
+        // Lọc kết quả duy nhất
+        return results.stream().distinct().collect(Collectors.toList());
+    }
 //    @Override
 //    public Page<Promo> findAll(Pageable pageable) {
 //        return promoRepository.findAll(pageable);

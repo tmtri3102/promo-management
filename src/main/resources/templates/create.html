@@ -7,7 +7,7 @@
 <body>
 <h1>Create a Promo</h1>
 <p><a href="/promo">All Promotions</a></p>
-
+<p th:text="${message}"></p>
 <form th:action="@{/promo/create}" th:object="${promo}" method="post">
     <table>
         <tr>
@@ -15,12 +15,22 @@
             <td><input type="text" th:field="*{title}" required placeholder="Enter title"/></td>
         </tr>
         <tr>
-            <td>Start Date (dd/mm/yyyy): </td>
-            <td><input type="text" th:field="*{startDate}" required placeholder="DD/MM/YYYY" pattern="\d{2}/\d{2}/\d{4}"/></td>
+            <td>Start Date: </td>
+            <td>
+                <input type="date" th:field="*{startDate}" required />
+                <div th:if="${errorStartDate}" style="color:red;">
+                    <span th:text="${errorStartDate}">Error message</span>
+                </div>
+            </td>
         </tr>
         <tr>
-            <td>End Date (dd/mm/yyyy): </td>
-            <td><input type="text" th:field="*{endDate}" required placeholder="DD/MM/YYYY" pattern="\d{2}/\d{2}/\d{4}"/></td>
+            <td>End Date: </td>
+            <td>
+                <input type="date" th:field="*{endDate}" required />
+                <div th:if="${errorEndDate}" style="color:red;">
+                    <span th:text="${errorEndDate}">Error message</span>
+                </div>
+            </td>
         </tr>
         <tr>
             <td>Discount: </td>
