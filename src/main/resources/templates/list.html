@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>All Promotions</title>
+</head>
+<body>
+<a href="/promo/create">Create a new promo</a>
+<h1>All Promotions</h1>
+<!--Search-->
+<div style="margin: 50px 0px">
+  <form th:action="@{/promo}" method="get">
+    <label><input type="text" name="search" placeholder="Search..."></label>
+    <button type="submit">Search</button>
+  </form>
+</div>
+<!--List-->
+<table border="1">
+  <tr>
+    <th>Title</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <th>Discount</th>
+    <th>Details</th>
+    <th>Update</th>
+    <th>Delete</th>
+  </tr>
+  <th:block th:each="promo : ${promos}">
+    <tr>
+      <td th:text="${promo.title}"></td>
+      <td th:text="${promo.startDate}"></td>
+      <td th:text="${promo.endDate}"></td>
+      <td th:text="${promo.discount}"></td>
+      <td th:text="${promo.description}"></td>
+      <!-- Change customer.id to promo.id -->
+      <td><a th:href="@{/promo/update/{id}(id=${promo.id})}">Update</a></td>
+      <td><a th:href="@{/promo/delete/{id}(id=${promo.id})}">Delete</a></td>
+    </tr>
+  </th:block>
+</table>
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>All Promotions</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a href="/promo/create">Create a new promo</a>-->
+<!--<h1>All Promotions</h1>-->
+<!--<div style="margin: 50px 0px">-->
+<!--  <form th:action="@{/promo}" method="get">-->
+<!--    <label><input type="text" name="search" placeholder="Search..."></label>-->
+<!--    <button type="submit">Search</button>-->
+<!--  </form>-->
+<!--</div>-->
+<!--<table border="1">-->
+<!--  <tr>-->
+<!--    <th>Title</th>-->
+<!--    <th>Start Date</th>-->
+<!--    <th>End Date</th>-->
+<!--    <th>Discount</th>-->
+<!--    <th>Details</th>-->
+<!--    <th>Update</th>-->
+<!--    <th>Delete</th>-->
+<!--  </tr>-->
+<!--  <th:block th:each="promo : ${promos}">-->
+<!--    <tr>-->
+<!--      <td th:text="${promo.title}"></td>-->
+<!--      <td th:text="${promo.startDate}"></td>-->
+<!--      <td th:text="${promo.endDate}"></td>-->
+<!--      <td th:text="${promo.discount}"></td>-->
+<!--      <td th:text="${promo.description}"></td>-->
+<!--&lt;!&ndash;      <td th:text="${promo.getProvince() != null ? promo.getProvince().getName() : 'N/A'}"></td>&ndash;&gt;-->
+<!--      <td><a th:href="@{/promo/update/__${customer.id}__ }">Update</a></td>-->
+<!--      <td><a th:href="@{/promo/delete/__${customer.id}__ }">Delete</a></td>-->
+<!--    </tr>-->
+<!--  </th:block>-->
+<!--</table>-->
+<!--&lt;!&ndash;<div>&ndash;&gt;-->
+<!--&lt;!&ndash;  <a th:if="${promos.hasPrevious()}" th:href="@{'/customers'(page=${promos.number - 1})}">Previous</a>&ndash;&gt;-->
+<!--&lt;!&ndash;  <span th:text="${promos.number + 1}"></span>/&ndash;&gt;-->
+<!--&lt;!&ndash;  <span th:text="${promos.totalPages}"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;  <a th:if="${promos.hasNext()}" th:href="@{'/customers'(page=${promos.number + 1})}">Next</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<a href="/provinces">Province list</a>&ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->

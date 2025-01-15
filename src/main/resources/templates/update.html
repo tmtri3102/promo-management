@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Promo</title>
+</head>
+<body>
+<h1>Update Promo</h1>
+<p>
+    <a href="/promo">Promo list</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form th:action="@{/promo/update}" th:object="${promo}" method="post"> <!-- Sửa: phương thức POST -->
+    <input type="hidden" th:field="*{id}"/>
+    <table>
+        <tr>
+            <td>Title: </td>
+            <td><input type="text" th:field="*{title}"/></td>
+        </tr>
+        <tr>
+            <td>Start Date (dd/mm/yyyy): </td>
+            <td><input type="text" th:field="*{startDate}" placeholder="DD/MM/YYYY" required/></td>
+        </tr>
+        <tr>
+            <td>End Date (dd/mm/yyyy): </td>
+            <td><input type="text" th:field="*{endDate}" placeholder="DD/MM/YYYY" required/></td>
+        </tr>
+        <tr>
+            <td>Discount: </td>
+            <td><input type="number" th:field="*{discount}" required min="10000"/></td>
+        </tr>
+        <tr>
+            <td>Details: </td>
+            <td><input type="text" th:field="*{description}"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Update Promo"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

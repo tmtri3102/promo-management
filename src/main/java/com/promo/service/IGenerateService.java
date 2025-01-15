@@ -1,4 +1,4 @@
-package com.springbootcustomerprovince.service;
+package com.promo.service;
 
 import java.util.Optional;
 
