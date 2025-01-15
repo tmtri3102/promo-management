@@ -4,12 +4,10 @@ import com.promo.model.Promo;
 import com.promo.service.IPromoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +26,9 @@ public class PromoController {
         Iterable<Promo> promos;
         if (search.isPresent() && !search.get().isEmpty()) {
             promos = promoService.searchPromos(search.get());
+            if (((List<Promo>) promos).isEmpty()) {
+                modelAndView.addObject("message", "No promotions found");
+            }
         } else {
             promos = promoService.findAll();
         }
