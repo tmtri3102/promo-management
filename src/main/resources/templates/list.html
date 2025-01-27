@@ -11,11 +11,32 @@
 <h1 class="mb-4">All Promotions</h1>
 
 <!-- Search -->
-<form th:action="@{/promo}" method="get" class="mb-4">
-  <div class="input-group" style="max-width: 300px;">
-    <input type="text" name="search" class="form-control" placeholder="Search...">
-    <button class="btn btn-outline-secondary" type="submit">Search</button>
-  </div>
+<!--<form th:action="@{/promo}" method="get" class="mb-4">-->
+<!--  <div class="input-group" style="max-width: 300px;">-->
+<!--    <input type="text" name="search" class="form-control" placeholder="Search...">-->
+<!--    <button class="btn btn-outline-secondary" type="submit">Search</button>-->
+<!--  </div>-->
+<!--</form>-->
+<form th:action="@{/promo/search_discount}" method="get" class="mb-4">
+  <label><input type="text" name="search" class="form-control" placeholder="Search..."></label>
+  <button type="submit" class="btn btn-success">Search by Discount</button>
+</form>
+
+<form th:action="@{/promo/search_start_date}" method="get" class="mb-4">
+  <label><input type="date" name="search" class="form-control" placeholder="Search by Start Date"></label>
+  <button type="submit" class="btn btn-success">Search by Start Date</button>
+</form>
+
+<form th:action="@{/promo/search_end_date}" method="get" class="mb-4">
+  <label><input type="date" name="search"  class="form-control" placeholder="Search by End Date"></label>
+  <button type="submit" class="btn btn-success">Search by End Date</button>
+</form>
+
+<form th:action="@{/vouchers/search_all}" method="get" class="mb-4"> Search by 3 fields: <br><br>
+  Discount: <label><input type="text" name="discount" class="form-control"></label><br><br>
+  Start Date: <label><input type="date" name="start_date" class="form-control"></label><br><br>
+  End Date:   <label><input type="date" name="end_date" class="form-control"></label><br><br>
+  <button type="submit" class="btn btn-success">Search all by 3 fields</button>
 </form>
 
 <!-- Message -->

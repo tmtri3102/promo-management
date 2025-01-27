@@ -4,6 +4,7 @@ import com.promo.model.Promo;
 import com.promo.service.IPromoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,29 +13,60 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.HashMap;
+
 @Controller
 @RequestMapping("/promo")
 public class PromoController {
     @Autowired
     private IPromoService promoService;
 
-
     @GetMapping
     public ModelAndView listPromo(@RequestParam("search") Optional<String> search) {
         ModelAndView modelAndView = new ModelAndView("list");
-
-        Iterable<Promo> promos;
-        if (search.isPresent() && !search.get().isEmpty()) {
-            promos = promoService.searchPromos(search.get());
-            if (((List<Promo>) promos).isEmpty()) {
-                modelAndView.addObject("message", "No promotions found");
-            }
-        } else {
-            promos = promoService.findAll();
-        }
-
+//        Iterable<Promo> promos;
+//        if (search.isPresent() && !search.get().isEmpty()) {
+//            promos = promoService.searchPromos(search.get());
+//            if (((List<Promo>) promos).isEmpty()) {
+//                modelAndView.addObject("message", "No promotions found");
+//            }
+//        } else {
+//            promos = promoService.findAll();
+//        }
+        Iterable<Promo> promos = promoService.findAll();
         modelAndView.addObject("promos", promos);
         return modelAndView;
+    }
+
+    // SEARCH
+    @GetMapping("/search_discount")
+    public String searchPromosByDiscount(@RequestParam("search") String discount, Model model) {
+        long amount = Long.parseLong(discount);
+        model.addAttribute("promos", promoService.findAllByDiscount(amount));
+        return "list";
+    }
+
+    @GetMapping("/search_start_date")
+    public String searchPromosByStartDate(@RequestParam("search") String date, Model model) {
+        LocalDate startDate = LocalDate.parse(date);
+        model.addAttribute("promos", promoService.findAllByStartDate(startDate));
+        return "list";
+    }
+
+    @GetMapping("/search_end_date")
+    public String searchPromosByEndDate(@RequestParam("search") String date, Model model) {
+        LocalDate startDate = LocalDate.parse(date);
+        model.addAttribute("promos", promoService.findAllByEndDate(startDate));
+        return "list";
+    }
+
+    @GetMapping("/search_all")
+    public String searchPromosBy3Fields(@RequestParam long discount, @RequestParam LocalDate start_date, @RequestParam LocalDate end_date, Model model) {
+
+        Iterable<Promo> vouchers = promoService.findAllByThreeFields(discount, start_date, end_date);
+
+        model.addAttribute("promos", vouchers);
+        return "list";
     }
 
 
@@ -120,6 +152,4 @@ public class PromoController {
         promoService.remove(promo.getId());
         return "redirect:/promo";
     }
-
-
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,6 +65,26 @@ public class PromoService implements IPromoService {
 
         // Lọc kết quả duy nhất
         return results.stream().distinct().collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<? extends Promo> findAllByDiscount(long discount) {
+        return promoRepository.findAllByDiscount(discount);
+    }
+
+    @Override
+    public Collection<? extends Promo> findAllByStartDate(LocalDate date) {
+        return promoRepository.findAllByStartDate(date);
+    }
+
+    @Override
+    public Collection<? extends Promo> findAllByEndDate(LocalDate date) {
+        return promoRepository.findAllByEndDate(date);
+    }
+
+    @Override
+    public Iterable<Promo> findAllByThreeFields(long discount, LocalDate startDate, LocalDate endDate) {
+        return promoRepository.findAllByThreeFields(discount, startDate, endDate);
     }
 //    @Override
 //    public Page<Promo> findAll(Pageable pageable) {
